@@ -2,7 +2,16 @@
 Snowflake UDF Functions modeled after Microsoft Excel functions
 
 <H1>Background</H1>
-This public repo was created to help analysts deploy familiar Excel function capabilities into Snowflake. Currently we have ported the following functions as JavaScript based functions:
+This public repository was created to help analysts deploy familiar Excel function capabilities into Snowflake. Currently we have ported the following functions as JavaScript based functions:
+
+<ul>
+  <li><b>WORKDAY</b> function calculates the date after a given number of workdays, while excluding specified holidays</li>
+  <li><b>NETWORKDAYS</b> function calculates the number of workdays between two given dates, while excluding specified holidays</li> 
+  <li><b>NETWORKWEEKS</b> function calculates the number of network weeks between two given dates, while excluding specified holidays</li>
+</ul>
+
+<h3>Notes on HOLIDAYS table</h3>
+To execute the functions in this repository in your Snowflake environment, it requires implementing a HOLIDAYS table within the schema for which the UDF is deployed. Please check out the WIKI for detailed instructions how to quickly install the HOLIDAYS table.
 
 <h2>WORKDAY UDF for Snowflake</h2>
 
