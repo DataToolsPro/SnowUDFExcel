@@ -4,7 +4,7 @@ Snowflake UDF Functions modeled after Microsoft Excel functions
 <H1>Background</H1>
 This public repo was created to help analysts deploy familiar Excel function capabilities into Snowflake. Currently we have ported the following functions as JavaScript based functions:
 
-<h2>WORKDAY</h2>
+<h2>WORKDAY UDF for Snowflake</h2>
 
 This is a Snowflake UDF (User-Defined Function)is intended to mimic the Excel WORKDAY function.. The function takes three inputs:
 <p>
@@ -14,7 +14,9 @@ This is a Snowflake UDF (User-Defined Function)is intended to mimic the Excel WO
 </p>
 <p><b>HOLIDAYS Table</b> This UDF was designed under an assumption there is a HOLDIAYS table located within the same schema where the UDF is deployed. Please see instructions below for installing the HOLIDAYS table
 </p>
-<p><b>Documentation</b>
+<p><b>Example SQL to Execute WORKDAY UDF<b>
+  </b><CODE>Sample SQL CODE</CODE>
+<p><b>Documentation</b> 
 The function is written in JavaScript and it first converts the input "HOLIDAYS" into a set of holidays, so that it can be easily checked if a date is a holiday or not. Then it initializes a variable "days_int" with the value of "DAYS" and converts it into an integer.
 <br/>The function then starts a loop that runs until the "days_int" is greater than 0. In each iteration, it increases the date by 1 and checks if the current date is a weekend(Saturday or Sunday) or a holiday. If it is, it continues to the next iteration, otherwise it decrements the "days_int" by 1.
 The function returns the final date after the loop is completed.
