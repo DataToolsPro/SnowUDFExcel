@@ -38,7 +38,7 @@ This is a Snowflake UDF (User-Defined Function) mimics the Excel WORKDAY functio
   <br/><CODE>WITH holidays_array as (SELECT  ARRAY_TO_STRING(ARRAY_CONSTRUCT(
 SELECT * FROM <DB_NAME>.<SCHEMA_NAME>.HOLIDAYS), ',') as HOLIDAYS)
 
-SELECT WORKDAY('2023-01-09', '-60',(SELECT HOLIDAYS FROM holidays_array)) as networkday</CODE>
+SELECT WORKDAY('2023-01-09', '10',(SELECT HOLIDAYS FROM holidays_array)) as networkday</CODE>
  </p>
 <p><b>Documentation</b> 
 <br/>The function is written in JavaScript and it first converts the input "HOLIDAYS" into a set of holidays, so that it can be easily checked if a date is a holiday or not. Then it initializes a variable "days_int" with the value of "DAYS" and converts it into an integer.
