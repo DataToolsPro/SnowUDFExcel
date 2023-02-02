@@ -1,7 +1,5 @@
---CREATED BY RYAN GOODMAN--
-
 CREATE OR REPLACE FUNCTION networkweeks(START_DATE DATE, END_DATE DATE, HOLIDAYS VARCHAR(1000000))
-RETURNS VARCHAR(255)
+RETURNS VARCHAR
 LANGUAGE JAVASCRIPT
 AS $$
     // Check for null inputs
@@ -12,23 +10,30 @@ AS $$
     var holidays_list = HOLIDAYS.split(',');
     var holiday_set = new Set(holidays_list);
 
-    // Start counting from next Monday after start date
+    // Start counting from start date
     var curr_date = new Date(START_DATE);
-    curr_date.setDate(curr_date.getDate() + (8 - curr_date.getUTCDay()) % 7);
 
-    // End counting on previous Friday before end date
+    // End counting on end date
     var end_date = new Date(END_DATE);
-    end_date.setDate(end_date.getDate() - end_date.getUTCDay() % 7);
 
     var weeks_int = 0;
 
-    // Iterate through each week until end date
-    while (curr_date < end_date) {
+    // Iterate through each day until end date
+    while (curr_date <= end_date) {
         // Ignore weekends and holidays
         if (curr_date.getUTCDay() % 6 != 0 && !holiday_set.has(curr_date.toString())) {
+            var next_date = new Date(curr_date.getTime());
+            next_date.setDate(next_date.getDate() + 7);
+            // Check if the next week is fully contained within the start and end dates
+            if (next_date > end_date) {
+                break;
+            }
+            // Increment the number of full weeks
             weeks_int++;
+            curr_date = next_date;
+        } else {
+            curr_date.setDate(curr_date.getDate() + 1);
         }
-        curr_date.setDate(curr_date.getDate() + 7);
     }
 
     return weeks_int;
