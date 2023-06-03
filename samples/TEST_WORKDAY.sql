@@ -5,4 +5,4 @@ FROM HOLIDAYS
 
 SELECT workday('2023-01-06', '1',(SELECT HOLIDAYS FROM holidays_array)) as next_workday
 
-FROM DB.SCHEMA.TABLE;
+FROM <DB_NAME>.<SCHEMA_NAME>.<TABLE_NAME>;
