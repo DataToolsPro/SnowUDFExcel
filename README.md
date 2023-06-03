@@ -24,6 +24,12 @@ The holidays data is available in a CSV format in the event you would like to ad
 <p>The holidays included with this code come from the Federal Reserve bank website:
 <br/>https://www.frbservices.org/about/holiday-schedules</p>
 
+
+<h3>Things to Remember</h3>
+Here are a few tips and finding that we discovered along the way implementing and using these UDFs
+1. UFDs is not globally applied. You need to run a UDF for each schema that you want it to operate.
+2. When you call a UDF, especially outside of Snwoflake, you need the fully qualified name including the table and schema.
+
 <h2>WORKDAY UDF for Snowflake</h2>
 
 This is a Snowflake UDF (User-Defined Function) mimics the Excel WORKDAY function input and results. It adds or subtracts the number of days from a single date and outputs the resulting date while excluding weekends and specified holidays. The function takes three inputs:
