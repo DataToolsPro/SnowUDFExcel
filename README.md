@@ -46,9 +46,7 @@ This is a Snowflake UDF (User-Defined Function) mimics the Excel WORKDAY functio
 SELECT ARRAY_TO_STRING(ARRAY_AGG(to_char(HOLIDAY, 'YYYY-MM-DD')), ',') AS HOLIDAYS
 FROM <DB_NAME>.<SCHEMA_NAME>.HOLIDAYS
 )
-
 SELECT workday('2023-01-06', '1',(SELECT HOLIDAYS FROM holidays_array)) as next_workday
-
 FROM <DB_NAME>.<SCHEMA_NAME>.<TABLE_NAME>;</CODE>
  </p>
 <p><b>Documentation</b> 
@@ -72,9 +70,7 @@ This is a Snowflake UDF (User-Defined Function) mimics the Excel NETWORKDAYS fun
 SELECT ARRAY_TO_STRING(ARRAY_AGG(to_char(HOLIDAY, 'YYYY-MM-DD')), ',') AS HOLIDAYS
 FROM <DB_NAME>.<SCHEMA_NAME>.HOLIDAYS
 )
-
 SELECT NETWORKDAYS('2023-01-10' , '2022-12-20' , (SELECT HOLIDAYS FROM holidays_array)) as networkdays
-
 FROM <DB_NAME>.<SCHEMA_NAME>.<TABLE_NAME>;</CODE>
    </p>
 <p><b>Documentation</b> 
@@ -97,9 +93,7 @@ Technically, there is no Excel function for NETWORKWEEKs. This is a Snowflake UD
 SELECT ARRAY_TO_STRING(ARRAY_AGG(to_char(HOLIDAY, 'YYYY-MM-DD')), ',') AS HOLIDAYS
 FROM <DB_NAME>.<SCHEMA_NAME>.HOLIDAYS
 )
-
 SELECT NETWORKWEEKS('2023-01-06' , '2023-01-16' , (SELECT HOLIDAYS FROM holidays_array)) as networkweeks
-
 FROM <DB_NAME>.<SCHEMA_NAME>.<TABLE_NAME>;</CODE>
      </p>
 <p><b>Documentation</b> 
