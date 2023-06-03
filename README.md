@@ -44,10 +44,10 @@ This is a Snowflake UDF (User-Defined Function) mimics the Excel WORKDAY functio
   <br/>
 <CODE>WITH holidays_array AS (
 SELECT ARRAY_TO_STRING(ARRAY_AGG(to_char(HOLIDAY, 'YYYY-MM-DD')), ',') AS HOLIDAYS
-FROM <DB_NAME>.<SCHEMA_NAME>.HOLIDAYS
+FROM DB_NAME.SCHEMA_NAME.HOLIDAYS
 )
 SELECT workday('2023-01-06', '1',(SELECT HOLIDAYS FROM holidays_array)) as next_workday
-FROM <DB_NAME>.<SCHEMA_NAME>.<TABLE_NAME>;</CODE>
+FROM DB_NAME.SCHEMA_NAME.TABLE_NAME;</CODE>
  </p>
 <p><b>Documentation</b> 
 <br/>The function is written in JavaScript and it first converts the input "HOLIDAYS" into a set of holidays, so that it can be easily checked if a date is a holiday or not. Then it initializes a variable "days_int" with the value of "DAYS" and converts it into an integer.
@@ -68,10 +68,10 @@ This is a Snowflake UDF (User-Defined Function) mimics the Excel NETWORKDAYS fun
  <p><b>Example SQL to Execute NETWORKDAYS UDF</b>
   <br/><CODE>WITH holidays_array AS (
 SELECT ARRAY_TO_STRING(ARRAY_AGG(to_char(HOLIDAY, 'YYYY-MM-DD')), ',') AS HOLIDAYS
-FROM <DB_NAME>.<SCHEMA_NAME>.HOLIDAYS
+FROM DB_NAME.SCHEMA_NAME.HOLIDAYS
 )
 SELECT NETWORKDAYS('2023-01-10' , '2022-12-20' , (SELECT HOLIDAYS FROM holidays_array)) as networkdays
-FROM <DB_NAME>.<SCHEMA_NAME>.<TABLE_NAME>;</CODE>
+FROM DB_NAME.SCHEMA_NAME.TABLE_NAME;</CODE>
    </p>
 <p><b>Documentation</b> 
 <br/>The function is written in JavaScript and it first checks if any of the inputs are null, if so it returns null. Then it converts the input "HOLIDAYS" into a set of holidays, so that it can be easily checked if a date is a holiday or not.
@@ -91,10 +91,10 @@ Technically, there is no Excel function for NETWORKWEEKs. This is a Snowflake UD
    <p><b>Example SQL to Execute NETWORKWEEKS UDF</b>
   <br/><CODE>WITH holidays_array AS (
 SELECT ARRAY_TO_STRING(ARRAY_AGG(to_char(HOLIDAY, 'YYYY-MM-DD')), ',') AS HOLIDAYS
-FROM <DB_NAME>.<SCHEMA_NAME>.HOLIDAYS
+FROM DB_NAME.SCHEMA_NAME.HOLIDAYS
 )
 SELECT NETWORKWEEKS('2023-01-06' , '2023-01-16' , (SELECT HOLIDAYS FROM holidays_array)) as networkweeks
-FROM <DB_NAME>.<SCHEMA_NAME>.<TABLE_NAME>;</CODE>
+FROM DB_NAME.SCHEMA_NAME.TABLE_NAME;</CODE>
      </p>
 <p><b>Documentation</b> 
 <br/>The function is written in JavaScript and it first checks if any of the inputs are null, if so it returns null. Then it converts the input "HOLIDAYS" into a set of holidays, so that it can be easily checked if a date is a holiday or not.
