@@ -1,6 +1,6 @@
 WITH holidays_array AS (
 SELECT ARRAY_TO_STRING(ARRAY_AGG(to_char(HOLIDAY, 'YYYY-MM-DD')), ',') AS HOLIDAYS
-FROM HOLIDAYS
+FROM <DB_NAME>.<SCHEMA_NAME>.HOLIDAYS
 )
 
 SELECT workday('2023-01-06', '1',(SELECT HOLIDAYS FROM holidays_array)) as next_workday
