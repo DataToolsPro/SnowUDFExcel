@@ -28,7 +28,7 @@ The holidays data is available in a CSV format in the event you would like to ad
 <h3>Things to Remember Using UDFs in Snowflake</h3>
 Here are a few tips and finding that we discovered along the way implementing and using these UDFs
 <ol><li>1. UFDs is not globally applied. You need to run a UDF for each schema that you want it to operate.</li>
-<li>2. When you call a UDF, especially outside of Snwoflake, you need the fully qualified name including the table and schema.</li>
+<li>2. When you call a UDF, especially outside of Snowflake, you need the fully qualified name including the table and schema.</li>
 </ol>
 <h2>WORKDAY UDF for Snowflake</h2>
 
@@ -41,10 +41,15 @@ This is a Snowflake UDF (User-Defined Function) mimics the Excel WORKDAY functio
 <p><b>HOLIDAYS Table</b> This UDF was designed under an assumption there is a HOLDIAYS table located within the same schema where the UDF is deployed. Please see instructions below for installing the HOLIDAYS table
 </p>
 <p><b>Example SQL to Execute WORKDAY UDF</b>
-  <br/><CODE>WITH holidays_array as (SELECT  ARRAY_TO_STRING(ARRAY_CONSTRUCT(
-SELECT * FROM <DB_NAME>.<SCHEMA_NAME>.HOLIDAYS), ',') as HOLIDAYS)
+  <br/>
+<CODE>WITH holidays_array AS (
+SELECT ARRAY_TO_STRING(ARRAY_AGG(to_char(HOLIDAY, 'YYYY-MM-DD')), ',') AS HOLIDAYS
+FROM <DB_NAME>.<SCHEMA_NAME>.HOLIDAYS
+)
 
-SELECT WORKDAY('2023-01-09', '10',(SELECT HOLIDAYS FROM holidays_array)) as networkday</CODE>
+SELECT workday('2023-01-06', '1',(SELECT HOLIDAYS FROM holidays_array)) as next_workday
+
+FROM <DB_NAME>.<SCHEMA_NAME>.<TABLE_NAME>;</CODE>
  </p>
 <p><b>Documentation</b> 
 <br/>The function is written in JavaScript and it first converts the input "HOLIDAYS" into a set of holidays, so that it can be easily checked if a date is a holiday or not. Then it initializes a variable "days_int" with the value of "DAYS" and converts it into an integer.
@@ -62,11 +67,15 @@ This is a Snowflake UDF (User-Defined Function) mimics the Excel NETWORKDAYS fun
 <br/><b>HOLIDAYS:</b> a varchar(1000000) input that represents the holidays that are to be excluded while calculating the network days. The holidays are passed in a string format, separated by commas.
  <p><b>HOLIDAYS Table</b> This UDF was designed under an assumption there is a HOLDIAYS table located within the same schema where the UDF is deployed. Please see instructions below for installing the HOLIDAYS table
 </p>
- <p><b>Example SQL to Execute WORKDAY UDF</b>
-  <br/><CODE>WITH holidays_array as (SELECT  ARRAY_TO_STRING(ARRAY_CONSTRUCT(
-SELECT * FROM <DB_NAME>.<SCHEMA_NAME>.HOLIDAYS), ',') as HOLIDAYS)
+ <p><b>Example SQL to Execute NETWORKDAYS UDF</b>
+  <br/><CODE>WITH holidays_array AS (
+SELECT ARRAY_TO_STRING(ARRAY_AGG(to_char(HOLIDAY, 'YYYY-MM-DD')), ',') AS HOLIDAYS
+FROM <DB_NAME>.<SCHEMA_NAME>.HOLIDAYS
+)
 
-SELECT NETWORKDAYS('2023-01-10' , '2022-12-20' , (SELECT HOLIDAYS FROM holidays_array)) as networkdays</CODE>
+SELECT NETWORKDAYS('2023-01-10' , '2022-12-20' , (SELECT HOLIDAYS FROM holidays_array)) as networkdays
+
+FROM <DB_NAME>.<SCHEMA_NAME>.<TABLE_NAME>;</CODE>
    </p>
 <p><b>Documentation</b> 
 <br/>The function is written in JavaScript and it first checks if any of the inputs are null, if so it returns null. Then it converts the input "HOLIDAYS" into a set of holidays, so that it can be easily checked if a date is a holiday or not.
@@ -83,11 +92,15 @@ Technically, there is no Excel function for NETWORKWEEKs. This is a Snowflake UD
 <br/><b>HOLIDAYS:</b> a varchar(1000000) input that represents the holidays that are to be excluded while calculating the network weeks. The holidays are passed in a string format, separated by commas.
   <p><b>HOLIDAYS Table</b> This UDF was designed under an assumption there is a HOLDIAYS table located within the same schema where the UDF is deployed. Please see instructions below for installing the HOLIDAYS table
 </p>
-   <p><b>Example SQL to Execute WORKDAY UDF</b>
-  <br/><CODE>WITH holidays_array as (SELECT  ARRAY_TO_STRING(ARRAY_CONSTRUCT(
-SELECT * FROM <DB_NAME>.<SCHEMA_NAME>.HOLIDAYS), ',') as HOLIDAYS)
+   <p><b>Example SQL to Execute NETWORKWEEKS UDF</b>
+  <br/><CODE>WITH holidays_array AS (
+SELECT ARRAY_TO_STRING(ARRAY_AGG(to_char(HOLIDAY, 'YYYY-MM-DD')), ',') AS HOLIDAYS
+FROM <DB_NAME>.<SCHEMA_NAME>.HOLIDAYS
+)
 
-SELECT NETWORKWEEKS('2023-01-06' , '2023-01-16' , (SELECT HOLIDAYS FROM holidays_array)) as networkweeks</CODE>
+SELECT NETWORKWEEKS('2023-01-06' , '2023-01-16' , (SELECT HOLIDAYS FROM holidays_array)) as networkweeks
+
+FROM <DB_NAME>.<SCHEMA_NAME>.<TABLE_NAME>;</CODE>
      </p>
 <p><b>Documentation</b> 
 <br/>The function is written in JavaScript and it first checks if any of the inputs are null, if so it returns null. Then it converts the input "HOLIDAYS" into a set of holidays, so that it can be easily checked if a date is a holiday or not.
