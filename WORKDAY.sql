@@ -6,12 +6,13 @@ AS $$
     var holiday_list = HOLIDAYS.split(',');
     var holiday_set = new Set(holiday_list);
     var days_int = Number(DAYS);
+    var increment = days_int >= 0 ? 1 : -1;
+    days_int = Math.abs(days_int);
     while(days_int > 0) {
-        curr_date.setDate(curr_date.getDate() + 1);
-        if (curr_date.getUTCDay() % 6 == 0 || holiday_set.has(curr_date.toString())) {
-            continue;
+        curr_date.setDate(curr_date.getDate() + increment);
+        if (curr_date.getUTCDay() % 6 !== 0 && !holiday_set.has(curr_date.toString())) {
+            days_int--;
         }
-        days_int--;
     }
     return curr_date;
 $$;
