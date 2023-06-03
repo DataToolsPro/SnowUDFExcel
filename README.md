@@ -11,9 +11,9 @@ This public repository was created to help analysts deploy familiar Excel functi
 </ul>
 
 <h3>Notes on HOLIDAYS table</h3>
-To execute the functions in this repository in your Snowflake environment, it requires implementing a HOLIDAYS table within the schema for which the UDF is deployed. Please check out the WIKI for detailed instructions how to quickly install the HOLIDAYS table.
+To execute the functions in this repository in your Snowflake environment, it requires implementing a HOLIDAYS table within the schema for which the UDF is deployed. Please check out the WIKI for detailed instructions how to quickly install the HOLIDAYS table: <a href="https://github.com/DataToolsPro/SnowUDFExcel/wiki/Implementing-HOLIDAYS-in-your-Snowflake-environment">Holidays Table Install Instructions</a>
 
-<p>The UDF functions in this repository for WEEKDAY, NETWORKDAYS, and WORKDAY were implemented to use a Snowflake table to acquire the Holidays that are skipped. This article describes how to install the HOLDIAYS Table:</p>
+<p>The UDF functions in this repository for WEEKDAY, NETWORKDAYS, and WORKDAY were implemented to use a Snowflake table to acquire the Holidays that are skipped. This article describes instructions for <a href="https://github.com/DataToolsPro/SnowUDFExcel/wiki/Implementing-HOLIDAYS-in-your-Snowflake-environment">Holidays Table Install Instructions</a>:</p>
 <ol>
 <li>Download from the Samples folder the HOLDIAYS.SQL</li>
 <li>In snowflake select the Table and Schema you want to add the holiday table. This should be the same schema where you are importing the UDF</li>
@@ -38,7 +38,7 @@ This is a Snowflake UDF (User-Defined Function) mimics the Excel WORKDAY functio
 <br/><b>DAYS:</b> a varchar(10) input that represents the number of workdays to be added to the start date.
 <br/><b>HOLIDAYS:</b> a variant input that represents the holidays that are to be excluded while calculating the workdays.
 </p>
-<p><b>HOLIDAYS Table</b> This UDF was designed under an assumption there is a HOLDIAYS table located within the same schema where the UDF is deployed. Please see instructions below for installing the HOLIDAYS table
+<p><b>HOLIDAYS Table</b> This UDF was designed under an assumption there is a HOLDIAYS table located within the same schema where the UDF is deployed. Please see instructions for <a href="https://github.com/DataToolsPro/SnowUDFExcel/wiki/Implementing-HOLIDAYS-in-your-Snowflake-environment">Holidays Table Install Instructions</a>
 </p>
 <p><b>Example SQL to Execute WORKDAY UDF</b>
   <br/>
@@ -63,7 +63,7 @@ This is a Snowflake UDF (User-Defined Function) mimics the Excel NETWORKDAYS fun
   <b>START_DATE:</b> a date type input which represents the starting date.
 <br/><b>END_DATE:</b> a date type input which represents the end date.
 <br/><b>HOLIDAYS:</b> a varchar(1000000) input that represents the holidays that are to be excluded while calculating the network days. The holidays are passed in a string format, separated by commas.
- <p><b>HOLIDAYS Table</b> This UDF was designed under an assumption there is a HOLDIAYS table located within the same schema where the UDF is deployed. Please see instructions below for installing the HOLIDAYS table
+ <p><b>HOLIDAYS Table</b> This UDF was designed under an assumption there is a HOLDIAYS table located within the same schema where the UDF is deployed. Please see instructions for <a href="https://github.com/DataToolsPro/SnowUDFExcel/wiki/Implementing-HOLIDAYS-in-your-Snowflake-environment">Holidays Table Install Instructions</a>
 </p>
  <p><b>Example SQL to Execute NETWORKDAYS UDF</b>
   <br/><CODE>WITH holidays_array AS (
@@ -86,7 +86,7 @@ Technically, there is no Excel function for NETWORKWEEKs. This is a Snowflake UD
 <b>START_DATE:</b> a date type input which represents the starting date.
 <br/><b>END_DATE:</b> a date type input which represents the end date.
 <br/><b>HOLIDAYS:</b> a varchar(1000000) input that represents the holidays that are to be excluded while calculating the network weeks. The holidays are passed in a string format, separated by commas.
-  <p><b>HOLIDAYS Table</b> This UDF was designed under an assumption there is a HOLDIAYS table located within the same schema where the UDF is deployed. Please see instructions below for installing the HOLIDAYS table
+  <p><b>HOLIDAYS Table</b> This UDF was designed under an assumption there is a HOLDIAYS table located within the same schema where the UDF is deployed. Please see instructions for <a href="https://github.com/DataToolsPro/SnowUDFExcel/wiki/Implementing-HOLIDAYS-in-your-Snowflake-environment">Holidays Table Install Instructions</a>
 </p>
    <p><b>Example SQL to Execute NETWORKWEEKS UDF</b>
   <br/><CODE>WITH holidays_array AS (
