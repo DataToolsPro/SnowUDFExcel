@@ -75,7 +75,7 @@ SELECT NETWORKDAYS('2023-01-10' , '2022-12-20' , (SELECT HOLIDAYS FROM holidays_
 The function returns the final number of network days. If the start date was greater than the end date, the function returns a negative value.
 <p>Please note that this UDF is based on the standard JavaScript Date object, which means it's based on the local timezone. Therefore, the result may vary depending on the timezone the Snowflake is running.
 
-<h2>NETWORKWEEKS - Expermintal</h2>
+<h2>NETWORKWEEKS - Experimental</h2>
 Technically, there is no Excel function for NETWORKWEEKs. This is a Snowflake UDF (User-Defined Function) that calculates the number of network weeks between two given dates, while excluding specified holidays. The function takes three inputs:
 <p>
 <b>START_DATE:</b> a date type input which represents the starting date.
