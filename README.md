@@ -1,5 +1,5 @@
 # SnowUDFExcel
-Snowflake UDF Functions modeled after Microsoft Excel functions
+Snowflake UDF Functions modeled after Microsoft Excel functions. Written with the help of an AI assistant
 
 <H1>Background</H1>
 This public repository was created to help analysts deploy familiar Excel function capabilities into Snowflake. Currently we have ported the following functions as JavaScript based functions:
