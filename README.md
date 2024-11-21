@@ -7,7 +7,7 @@ This public repository was created to help analysts deploy familiar Excel functi
 <ul>
   <li><b>WORKDAY</b> function calculates the date after a given number of workdays, while excluding specified holidays</li>
   <li><b>NETWORKDAYS</b> function calculates the number of workdays between two given dates, while excluding specified holidays</li> 
-  <li><b>NETWORKWEEKS</b> function calculates the number of network weeks between two given dates, while excluding specified holidays</li>
+  <li><b>NETWORKWEEKS</b> function calculates the number of net work weeks between two given dates, while excluding specified holidays</li>
 </ul>
 
 <h3>Notes on HOLIDAYS table</h3>
@@ -15,7 +15,7 @@ To execute the functions in this repository in your Snowflake environment, it re
 
 <p>The UDF functions in this repository for WEEKDAY, NETWORKDAYS, and WORKDAY were implemented to use a Snowflake table to acquire the Holidays that are skipped. This article describes instructions for <a href="https://github.com/DataToolsPro/SnowUDFExcel/wiki/Implementing-HOLIDAYS-in-your-Snowflake-environment">Holidays Table Install Instructions</a>:</p>
 <ol>
-<li>Download from the Samples folder the HOLDIAYS.SQL</li>
+<li>Download from the Samples folder the HOLIDAYS.SQL</li>
 <li>In snowflake select the Table and Schema you want to add the holiday table. This should be the same schema where you are importing the UDF</li>
 <li>Execute the TABLE CREATION and INSERT SQL to place holidays into the table.</li>
 </ol>
@@ -27,7 +27,7 @@ The holidays data is available in a CSV format in the event you would like to ad
 
 <h3>Things to Remember Using UDFs in Snowflake</h3>
 Here are a few tips and finding that we discovered along the way implementing and using these UDFs
-<ol><li>1. UFDs is not globally applied. You need to run a UDF for each schema that you want it to operate.</li>
+<ol><li>1. UDFs is not globally applied. You need to run a UDF for each schema that you want it to operate.</li>
 <li>2. When you call a UDF, especially outside of Snowflake, you need the fully qualified name including the table and schema.</li>
 </ol>
 <h2>WORKDAY UDF for Snowflake</h2>
@@ -62,7 +62,7 @@ This is a Snowflake UDF (User-Defined Function) mimics the Excel NETWORKDAYS fun
 <p>
   <b>START_DATE:</b> a date type input which represents the starting date.
 <br/><b>END_DATE:</b> a date type input which represents the end date.
-<br/><b>HOLIDAYS:</b> a varchar(1000000) input that represents the holidays that are to be excluded while calculating the network days. The holidays are passed in a string format, separated by commas.
+<br/><b>HOLIDAYS:</b> a varchar(1000000) input that represents the holidays that are to be excluded while calculating the net work days. The holidays are passed in a string format, separated by commas.
  <p><b>HOLIDAYS Table</b> This UDF was designed under an assumption there is a HOLDIAYS table located within the same schema where the UDF is deployed. Please see instructions for <a href="https://github.com/DataToolsPro/SnowUDFExcel/wiki/Implementing-HOLIDAYS-in-your-Snowflake-environment">Holidays Table Install Instructions</a>
 </p>
  <p><b>Example SQL to Execute NETWORKDAYS UDF</b>
@@ -70,22 +70,22 @@ This is a Snowflake UDF (User-Defined Function) mimics the Excel NETWORKDAYS fun
 SELECT ARRAY_TO_STRING(ARRAY_AGG(to_char(HOLIDAY, 'YYYY-MM-DD')), ',') AS HOLIDAYS
 FROM DB_NAME.SCHEMA_NAME.HOLIDAYS
 )
-SELECT NETWORKDAYS('2023-01-10' , '2022-12-20' , (SELECT HOLIDAYS FROM holidays_array)) as networkdays
+SELECT NETWORKDAYS('2023-01-10' , '2022-12-20' , (SELECT HOLIDAYS FROM holidays_array)) as network days
 FROM DB_NAME.SCHEMA_NAME.TABLE_NAME;</CODE>
    </p>
 <p><b>Documentation</b> 
 <br/>The function is written in JavaScript and it first checks if any of the inputs are null, if so it returns null. Then it converts the input "HOLIDAYS" into a set of holidays, so that it can be easily checked if a date is a holiday or not.
 <br/>The function then checks if the end date is before the start date, if so it swaps the values of start_date and end_date and sets the variable 'isNegative' to true to indicate that the result should be negative.
 <br/>The function starts a loop that runs from the start date to the end date. In each iteration, it checks if the current date is a weekend(Saturday or Sunday) or a holiday. If it is, it continues to the next iteration, otherwise it increments the "days_int" by 1.
-The function returns the final number of network days. If the start date was greater than the end date, the function returns a negative value.
+The function returns the final number of net work days. If the start date was greater than the end date, the function returns a negative value.
 <p>Please note that this UDF is based on the standard JavaScript Date object, which means it's based on the local timezone. Therefore, the result may vary depending on the timezone the Snowflake is running.
 
 <h2>NETWORKWEEKS - Experimental</h2>
-Technically, there is no Excel function for NETWORKWEEKs. This is a Snowflake UDF (User-Defined Function) that calculates the number of network weeks between two given dates, while excluding specified holidays. The function takes three inputs:
+Technically, there is no Excel function for NETWORKWEEKS. This is a Snowflake UDF (User-Defined Function) that calculates the number of net work weeks between two given dates, while excluding specified holidays. The function takes three inputs:
 <p>
 <b>START_DATE:</b> a date type input which represents the starting date.
 <br/><b>END_DATE:</b> a date type input which represents the end date.
-<br/><b>HOLIDAYS:</b> a varchar(1000000) input that represents the holidays that are to be excluded while calculating the network weeks. The holidays are passed in a string format, separated by commas.
+<br/><b>HOLIDAYS:</b> a varchar(1000000) input that represents the holidays that are to be excluded while calculating the net work weeks. The holidays are passed in a string format, separated by commas.
   <p><b>HOLIDAYS Table</b> This UDF was designed under an assumption there is a HOLDIAYS table located within the same schema where the UDF is deployed. Please see instructions for <a href="https://github.com/DataToolsPro/SnowUDFExcel/wiki/Implementing-HOLIDAYS-in-your-Snowflake-environment">Holidays Table Install Instructions</a>
 </p>
    <p><b>Example SQL to Execute NETWORKWEEKS UDF</b>
@@ -93,14 +93,14 @@ Technically, there is no Excel function for NETWORKWEEKs. This is a Snowflake UD
 SELECT ARRAY_TO_STRING(ARRAY_AGG(to_char(HOLIDAY, 'YYYY-MM-DD')), ',') AS HOLIDAYS
 FROM DB_NAME.SCHEMA_NAME.HOLIDAYS
 )
-SELECT NETWORKWEEKS('2023-01-06' , '2023-01-16' , (SELECT HOLIDAYS FROM holidays_array)) as networkweeks
+SELECT NETWORKWEEKS('2023-01-06' , '2023-01-16' , (SELECT HOLIDAYS FROM holidays_array)) as NETWORKWEEKS
 FROM DB_NAME.SCHEMA_NAME.TABLE_NAME;</CODE>
      </p>
 <p><b>Documentation</b> 
 <br/>The function is written in JavaScript and it first checks if any of the inputs are null, if so it returns null. Then it converts the input "HOLIDAYS" into a set of holidays, so that it can be easily checked if a date is a holiday or not.
 <br/>The function then sets the current date to the next Monday after the start date and sets the end date to the previous Friday before the end date.
 <br/>The function starts a loop that runs until the current date is less than the end date. In each iteration, it checks if the current date is a weekend(Saturday or Sunday) or a holiday. If it is not, it increments the "weeks_int" by 1.
-<br/>The function returns the final number of network weeks.
+<br/>The function returns the final number of net work weeks.
 <p/>Please note that this UDF is based on the standard JavaScript Date object, which means it's based on the local timezone. Therefore, the result may vary depending on the timezone the Snowflake is running.
 
 
